@@ -113,6 +113,27 @@ def update():
     return resposta
 
 
+@device.route('/update/', methods=['PUT'])
+def update_for_device():
+    device = request.get_json()
+
+    try:
+        conn = conectar()
+        cur = conn.cursor()
+        cur.execute("UPDATE tb_device SET lock=? WHERE id=?",
+                    (device['id']),device['lock'])
+        conn.commit()
+        resposta = jsonify({'mensagem':'Operacao realizada com sucesso'})
+
+    except Exception as e:
+        conn.rollback()
+        resposta = jsonify({'erro' : str(e)})
+    finally:
+        conn.close()
+
+    return resposta
+
+
 #
 # APAGAR UM DISPOSITIVO
 #
