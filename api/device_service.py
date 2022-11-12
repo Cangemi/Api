@@ -121,7 +121,7 @@ def update_for_device():
         conn = conectar()
         cur = conn.cursor()
         cur.execute("UPDATE tb_device SET lock=? WHERE id=?",
-                    (device['id']),device['lock'])
+                    (device['id'],device['lock']))
         conn.commit()
         resposta = jsonify({'mensagem':'Operacao realizada com sucesso'})
 
