@@ -1,5 +1,6 @@
-from flask import Flask, Blueprint, request, jsonify
 import sqlite3
+
+from flask import Blueprint, Flask, jsonify, request
 
 cliente = Blueprint('cliente',__name__)
 
