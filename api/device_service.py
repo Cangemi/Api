@@ -6,27 +6,10 @@ device = Blueprint('device',__name__)
 def conectar():
     return sqlite3.connect('database/data.db')
 
-@device.route('/', methods=['GET'])
-def get_all():
-    devices = []
-    try:
-        conn = conectar()
-        conn.row_factory = sqlite3.Row
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM tb_device")
 
-        for i in cur.fetchall():
-            device = {}
-            device["id"] = int (i["id"])
-            device["nome"] = i["nome"]
-            device["mac"] = i["mac"]
-            device["lock"] = int (i["lock"])
-            devices.append(device)
-    except Exception as e:
-        print(e)
-        devices = []
-
-    return jsonify(devices)
+@device.route('/')
+def instructions():
+    return "Dispositivo"
 
 #region DEVICE PELO ID
 
@@ -117,7 +100,7 @@ def update():
         conn = conectar()
         cur = conn.cursor()
         cur.execute("UPDATE tb_device SET nome=?, mac=?, lock=? WHERE id=?",
-                    (device['nome'], device['mac'],device['lock'], device['id']))
+                    (device['nome'],device['mac'],device['lock'], device['id']))
         conn.commit()
         resposta = jsonify({'mensagem':'Operacao realizada com sucesso'})
 
@@ -131,7 +114,7 @@ def update():
 
 
 #
-# APAGAR UM dispositivo
+# APAGAR UM DISPOSITIVO
 #
 @device.route('/<id>', methods=['DELETE'])
 def delete(id):

@@ -7,33 +7,9 @@ cliente = Blueprint('cliente',__name__)
 def conectar():
     return sqlite3.connect('database/data.db')
 
-
-#
-# RETORNAR TODOS OS CLIENTES
-#
-@cliente.route('/', methods=['GET'])
-def get_all():
-    clientes = []
-    try:
-        conn = conectar()
-        conn.row_factory = sqlite3.Row
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM tb_cliente")
-        for i in cur.fetchall():
-            cliente = {}
-            cliente["id"] = i["id"]
-            cliente["nome"] = i["nome"]
-            cliente["email"] = i["email"]
-            cliente["senha"] = i["senha"]
-            cliente["telefone1"] = i["telefone1"]
-            cliente["telefone2"] = i["telefone2"]
-            clientes.append(cliente)
-    except Exception as e:
-        print(e)
-        clientes = []
-
-    return jsonify(clientes)
-
+@cliente.route('/')
+def instructions():
+    return "Clientes"
 #
 # RETORNAR CLIENTE PELO ID
 #
@@ -60,7 +36,7 @@ def get_by_id(id):
 
     return jsonify(cliente)
 
- #
+#
 # RETORNAR CLIENTE Por EMAIL E SENHA
 #
 @cliente.route('/<email>/<senha>', methods=['GET'])
@@ -126,28 +102,6 @@ def update():
                     (cliente['nome'], cliente['email'], cliente['senha'], cliente['telefone1'],cliente['telefone2'], cliente['id']) )
         conn.commit()
         resposta = jsonify({'mensagem':'Operacao realizada com sucesso'})
-
-    except Exception as e:
-        conn.rollback()
-        resposta = jsonify({'erro' : str(e)})
-    finally:
-        conn.close()
-
-    return resposta
-
-
-#
-# APAGAR UM CLIENTE
-#
-@cliente.route('/<id>', methods=['DELETE'])
-def delete(id):
-    print(id)
-    try:
-        conn = conectar()
-        cur = conn.cursor()
-        cur.execute("DELETE FROM tb_cliente WHERE id=?",(id,))
-        conn.commit()
-        resposta = jsonify({'mensagem':'Registro apagado com sucesso'})
 
     except Exception as e:
         conn.rollback()
