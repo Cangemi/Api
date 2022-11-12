@@ -64,7 +64,7 @@ def get_by_id(id):
 # RETORNAR CLIENTE Por EMAIL E SENHA
 #
 @cliente.route('/<email>/<senha>', methods=['GET'])
-def get_by_id(email,senha):
+def get_by_email(email,senha):
     cliente = {}
     try:
         conn = conectar()
