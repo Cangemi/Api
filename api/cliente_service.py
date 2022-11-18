@@ -46,7 +46,7 @@ def get_by_email(email,senha):
         conn = conectar()
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        cur.execute("SELECT * FROM tb_cliente where email=? and ",(email,senha))
+        cur.execute("SELECT * FROM tb_cliente where email=? and  senha=?",(email,senha))
         row = cur.fetchone()
        
         cliente["id"] = row["id"]
