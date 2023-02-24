@@ -14,7 +14,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 #
 # REGISTRAR AS ROTAS
-#
+#o
 app.register_blueprint(cliente,url_prefix='/api/cliente')
 app.register_blueprint(device,url_prefix='/api/device')
 app.register_blueprint(administrator,url_prefix='/api/admin')
